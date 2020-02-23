@@ -1,4 +1,7 @@
+//自己的服务器
 var url = 'http://localhost:8081';
+//豆瓣接口apikey
+var apikey='0df993c66c0c636e29ecbb5344252a4a';
 
 var errMsg = '网络连接失败,请稍后重试';
 

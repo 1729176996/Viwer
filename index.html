@@ -26,8 +26,8 @@
 <body>
 	<div class="mui-content" id="main">
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title"><input type="search" class="mui-input-clear" placeholder="请输入关键字" v-model="keyword"></h1>
-			<a class="mui-icon mui-icon-search mui-pull-right" @click="search"></a>
+			<h1 class="mui-title">电影Top</h1>
+			<a class="mui-icon mui-icon-arrowthinup mui-pull-right" @tap="toTop"></a>
 		</header>
 		<div class="mui-content mui-scroll-wrapper flex" style="position: relative;" id="scrollWrapper">
 			<div class="mui-scroll">
@@ -36,12 +36,8 @@
 				<ul class="mui-table-view">
 					<li v-for="item in list" class="mui-table-view-cell">
 						<div class="hang">
-							<div class="flex">{{item.name}}</div>
-							<div>{{item.author}}</div>
-						</div>
-						<div class="hang">
-							<div class="flex">{{item.last_title}}</div>
-							<div>{{item.last_time}}</div>
+							<div class="flex">{{item.title}}</div>
+							<div>{{item.year}}</div>
 						</div>
 					</li>
 				</ul>
@@ -49,13 +45,9 @@
 			</div>
 		</div>
 		<nav class="mui-bar mui-bar-tab" style="position: relative;">
-			<a class="mui-tab-item" @click="toShelf">
+			<a class="mui-tab-item mui-active" @click="toMovieTop">
 				<span class="mui-icon mui-icon-home"></span>
-				<span class="mui-tab-label">书架</span>
-			</a>
-			<a class="mui-tab-item mui-active" @click="toSearch">
-				<span class="mui-icon mui-icon-phone"></span>
-				<span class="mui-tab-label">搜索</span>
+				<span class="mui-tab-label">电影Top</span>
 			</a>
 		</nav>
 	</div>

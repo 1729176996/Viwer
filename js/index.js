@@ -1,11 +1,10 @@
 var vm,loading;
-var page = 0,next = false;
+var start = 0,count = 20,next = false;
 $(function(){
     FastClick.attach(document.body);
 	vm = new Vue({
 	    el: "#main",
 	    data:{
-			keyword:'',
 			list:[]
 	    },
 	    mounted:function(){
@@ -38,75 +37,46 @@ $(function(){
 						}
 					}
 				});
-			},
-			search:function(){
-				this.getList('下拉');
+				_this.getList('下拉');
 			},
 			getList:function(refreshType){
 				var _this = this;
-				var url = '';
 				if(refreshType=='下拉'){
-					page = 1;
-					next = false;
-					this.list = [];
-					url = 'https://qxs.la/s_'+_this.keyword+'/1/';
+					start = 0;
+					_this.list = [];
 				}else{
-					if(next){
-						url = 'https://qxs.la/s_'+_this.keyword+'/'+(++page)+'/';
-					}else{
-						if(refreshType=='下拉'){
-							mui('#scrollWrapper').pullRefresh().endPulldownToRefresh();
-							mui('#scrollWrapper').pullRefresh().scrollTo(0,0,0);
-						}else if(refreshType=='上拉'){
-							mui('#scrollWrapper').pullRefresh().endPullupToRefresh();
-						}
-						return;
-					}
+					start += count;
 				}
+				var sendObj = {
+					start:start,
+					count:count,
+					apikey:apikey
+				};
 				$.ajax({
-					url:url,
+					url:'https://api.douban.com/v2/movie/top250',
 					type:'GET',
+					data:sendObj,
+					dataType:'json',
 					timeout:8000,
 					success:function(data){
+						console.log(data);
 						
-						var _list = [];
-						var uls = data.split(/<ul class="list_content">([\s\S]*?)<\/ul>/);
-						for(var n=1;n<uls.length;n++){
-							var lis = uls[n].split(/<li class=([\s\S]*?)<\/li>/);
-							if(lis.length==9){
-								var as1 = lis[1].match(/<a href="([\s\S]*?)">([\s\S]*?)<\/a>/);
-								var url = as1[1];
-								var name = as1[2];
-								
-								var as2 = lis[3].match(/<a href="([\s\S]*?)">([\s\S]*?)<\/a>/);
-								var last_url = as2[1];
-								var last_title = as2[2];
-								
-								var as3 = lis[5].match(/<a href="([\s\S]*?)">([\s\S]*?)<\/a>/);
-								var author = as3[2];
-								
-								var as4 = lis[7].split(/"cc5">/);
-								var last_time = as4[1];
-								
-								var obj = {
-									name:name,
-									url:url,
-									last_title:last_title,
-									last_url:last_url,
-									author:author,
-									last_time:last_time
-								};
-								_list.push(obj);
+						if(data&&data.subjects&&data.subjects.length>0){
+							if(refreshType=='下拉'){
+								_this.list = data.subjects;
+							}else{
+								_this.list = _this.list.concat(data.subjects);
+							}
+						}else{
+							if(refreshType=='下拉'){
+								_this.list = [];
+								start = 0;
+							}else{
+								_this.list = _this.list.concat(data.subjects);
+								start -= count;
 							}
 						}
-						_this.list = _this.list.concat(_list);
 						
-						var pagenavArr = data.match(/<div id="pagenav">([\s\S]*?)<\/div>/);
-						console.log(pagenav);
-						if(pagenavArr.length==2){
-							var pagenav = pagenavArr[1];
-							next = pagenav.indexOf('<a href="/s_'+_this.keyword+'/'+(page+1)+'/">')>=0?true:false;
-						}
 						_this.$nextTick(function(){
 							if(refreshType=='下拉'){
 								mui('#scrollWrapper').pullRefresh().endPulldownToRefresh();
@@ -133,16 +103,8 @@ $(function(){
 					deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
 				}).scrollTo(0,0,100);
 			},
-			selectItem:function(item){
-				if(item&&item.func){
-					item.func();
-				}
-			},
-			toShelf:function(){
-				window.location.href = 'shelf.html';
-			},
-			toSearch:function(){
-				window.location.href = 'search.html';
+			toMovieTop:function(item){
+				window.location.href = 'index.html';
 			}
 	    }
 	});
