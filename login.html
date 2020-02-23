@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="referrer" content="no-referrer" />
+	<title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+	<link href="css/weui.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	<script src="js/mui.min.js"></script>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/weui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/login.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+	<div class="mui-content" id="main">
+		<div style="width: 100%;height: 200px;text-align: center;">
+			<img style="width: auto;height: 100%;" src="images/logo.jpg" />
+		</div>
+		<div class="mui-scroll-wrapper flex" style="position: relative;" id="scrollWrapper">
+			<div class="mui-scroll">
+				<!--这里放置真实显示的DOM内容-->
+				
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>用户名</label>
+						<input type="text" class="mui-input-clear" v-model="username" placeholder="请输入用户名">
+					</div>
+					<div class="mui-input-row">
+						<label>密码</label>
+						<input type="password" class="mui-input-password" v-model="password" placeholder="请输入密码">
+					</div>
+					<div class="mui-button-row">
+						<button type="button" class="mui-btn mui-btn-primary" @click="login" >登录</button>
+						<button type="button" class="mui-btn mui-btn-warning" @click="register" >注册</button>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
