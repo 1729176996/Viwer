@@ -21,6 +21,10 @@
 			height: auto;
 			display: flex;
 		}
+		.cover,.cover img{
+			width: 100px;
+			height: auto;
+		}
 	</style>
 </head>
 <body>
@@ -36,8 +40,13 @@
 				<ul class="mui-table-view">
 					<li v-for="item in list" class="mui-table-view-cell">
 						<div class="hang">
-							<div class="flex">{{item.title}}</div>
-							<div>{{item.year}}</div>
+							<div class="cover"><img :src="item.images.small" /></div>
+							<div class="flex">
+								<div class="c-blue">{{item.title}}<span v-if="item.title!=item.original_title"> / {{item.original_title}}</span></div>
+								<div>导演:<span v-for="director in item.directors"> {{director.name}}</span></div>
+								<div>主演:<span v-for="cast in item.casts"> {{cast.name}}</span></div>
+								<div>{{item.year}}<span v-for="genre in item.genres"> {{genre}}</span></div>
+							</div>
 						</div>
 					</li>
 				</ul>
