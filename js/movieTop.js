@@ -1,5 +1,5 @@
 var vm,loading;
-var start = 0,count = 20,next = false;
+var start = 0,count = 20;
 $(function(){
     FastClick.attach(document.body);
 	vm = new Vue({
@@ -98,16 +98,17 @@ $(function(){
 				})
 			},
 			toTop:function(){
-				mui('#scrollWrapper').scroll({
-					indicators:false,
-					deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
-				}).scrollTo(0,0,100);
+				mui('#scrollWrapper').pullRefresh().scrollTo(0,0,100);
 			},
 			toMovieTop:function(item){
 				window.location.href = 'index.html';
 			},
 			toComingSoon:function(item){
 				window.location.href = 'comingSoon.html';
+			},
+			detail:function(item){
+				window.localStorage.setItem('movie_id',item.id);
+				window.location.href = 'movieDetail.html';
 			}
 	    }
 	});

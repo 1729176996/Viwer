@@ -1,11 +1,10 @@
 var vm,loading;
-var start = 0,count = 20;
 $(function(){
     FastClick.attach(document.body);
 	vm = new Vue({
 	    el: "#main",
 	    data:{
-			list:[]
+			detailObj:[]
 	    },
 	    mounted:function(){
 			this.init();
@@ -41,19 +40,11 @@ $(function(){
 			},
 			getList:function(refreshType){
 				var _this = this;
-				if(refreshType=='下拉'){
-					start = 0;
-					_this.list = [];
-				}else{
-					start += count;
-				}
 				var sendObj = {
-					start:start,
-					count:count,
 					apikey:apikey
 				};
 				$.ajax({
-					url:'https://api.douban.com/v2/movie/coming_soon',
+					url:'https://api.douban.com/v2/movie/subject/'+window.localStorage.getItem('movie_id'),
 					type:'GET',
 					data:sendObj,
 					dataType:'json',
@@ -61,21 +52,7 @@ $(function(){
 					success:function(data){
 						console.log(data);
 						
-						if(data&&data.subjects&&data.subjects.length>0){
-							if(refreshType=='下拉'){
-								_this.list = data.subjects;
-							}else{
-								_this.list = _this.list.concat(data.subjects);
-							}
-						}else{
-							if(refreshType=='下拉'){
-								_this.list = [];
-								start = 0;
-							}else{
-								_this.list = _this.list.concat(data.subjects);
-								start -= count;
-							}
-						}
+						_this.detailObj = data?data:{};
 						
 						_this.$nextTick(function(){
 							if(refreshType=='下拉'){
@@ -99,16 +76,6 @@ $(function(){
 			},
 			toTop:function(){
 				mui('#scrollWrapper').pullRefresh().scrollTo(0,0,100);
-			},
-			toMovieTop:function(item){
-				window.location.href = 'index.html';
-			},
-			toComingSoon:function(item){
-				window.location.href = 'comingSoon.html';
-			},
-			detail:function(item){
-				window.localStorage.setItem('movie_id',item.id);
-				window.location.href = 'movieDetail.html';
 			}
 	    }
 	});
