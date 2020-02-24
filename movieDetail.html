@@ -16,14 +16,17 @@
 	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
     <script src="js/movieDetail.js" type="text/javascript" charset="utf-8"></script>
 	<style type="text/css">
-		.hang{
+		.cover{
 			width: 100%;
-			height: auto;
-			display: flex;
+			height: 280px;
+			text-align: center;
 		}
-		.cover,.cover img{
-			width: 100px;
-			height: auto;
+		.cover img{
+			width: auto;
+			height: 100%;
+		}
+		.mt1{
+			margin-top: 0.5em;
 		}
 	</style>
 </head>
@@ -38,16 +41,24 @@
 			<div class="mui-scroll">
 				<!--这里放置真实显示的DOM内容-->
 				
-				<div class="hang">
-					
-					<div class="flex">
-						<b>{{detailObj.title}}<span v-if="detailObj.title!=detailObj.original_title"> {{detailObj.original_title}}</span><span class="c-grey"> ({{detailObj.year}})</span></b>
-						<div>导演: <span v-for="director,index in detailObj.directors"><a v-if="index!=0"> / </a>{{director.name}}</span></div>
-						<div>主演: <span v-for="cast,index in detailObj.casts"><a v-if="index!=0"> / </a>{{cast.name}}</span></div>
-						<div>类型: <span v-for="genre,index in detailObj.genres"><a v-if="index!=0"> / </a>{{genre}}</span></div>
-					</div>
+				<div class="cover" v-if="detailObj&&detailObj.images&&detailObj.images.large">
+					<img :src="detailObj.images.large" />
 				</div>
-				<div>又名: <span v-for="ak,index in detailObj.aka"><a v-if="index!=0"> / </a>{{ak}}</span></div>
+				<div class="mt1">
+					<b>{{detailObj.title}} <span class="c-grey"> ({{detailObj.year}})</span></b>
+				</div>
+				<div class="mt1" v-if="detailObj.title!=detailObj.original_title">
+					<b>{{detailObj.original_title}}</b>
+				</div>
+				<div class="mt1">导演: <span v-for="director,index in detailObj.directors"><a v-if="index!=0"> / </a>{{director.name}}</span></div>
+				<div class="mt1">编剧: <span v-for="writer,index in detailObj.writers"><a v-if="index!=0"> / </a>{{writer.name}}</span></div>
+				<div class="mt1">主演: <span v-for="cast,index in detailObj.casts"><a v-if="index!=0"> / </a>{{cast.name}}</span></div>
+				<div class="mt1">类型: <span v-for="genre,index in detailObj.genres"><a v-if="index!=0"> / </a>{{genre}}</span></div>
+				<div class="mt1">制片国家/地区: <span v-for="country,index in detailObj.countries"><a v-if="index!=0"> / </a>{{country}}</span></div>
+				<div class="mt1">语言: <span v-for="language,index in detailObj.languages"><a v-if="index!=0"> / </a>{{language}}</span></div>
+				<div class="mt1">上映日期: <span v-for="pubdate,index in detailObj.pubdates"><a v-if="index!=0"> / </a>{{pubdate}}</span></div>
+				<div class="mt1">片长: <span v-for="duration,index in detailObj.durations"><a v-if="index!=0"> / </a>{{duration}}</span></div>
+				<div class="mt1">又名: <span v-for="ak,index in detailObj.aka"><a v-if="index!=0"> / </a>{{ak}}</span></div>
 				
 			</div>
 		</div>
