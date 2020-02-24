@@ -76,6 +76,12 @@ $(function(){
 			},
 			toTop:function(){
 				mui('#scrollWrapper').pullRefresh().scrollTo(0,0,100);
+			},
+			view:function(href){
+				if(plus){
+					var embed=plus.webview.create(href, '', {top:'0px',bottom:'0px'});
+					embed.show();
+				}
 			}
 	    }
 	});

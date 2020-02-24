@@ -68,7 +68,7 @@
 				<div class="mt1 mui-input-group">
 					<div class="hang mui-input-row">在哪儿看这部电影:</div>
 					<div class="hang mui-input-row" v-for="video in detailObj.videos">
-						<div class="flex" style="padding-left: 1em;"><a :href="video.sample_link" target="view_window">{{video.source.name}}</a></div>
+						<div class="flex" style="padding-left: 1em;"><a @click="view(video.sample_link)">{{video.source.name}}</a></div>
 						<div>{{video.need_pay?'VIP免费观看':'免费观看'}}</div>
 					</div>
 				</div>
