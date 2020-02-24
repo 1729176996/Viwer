@@ -105,6 +105,9 @@ $(function(){
 			},
 			toMovieTop:function(item){
 				window.location.href = 'index.html';
+			},
+			toComingSoon:function(item){
+				window.location.href = 'comingSoon.html';
 			}
 	    }
 	});

@@ -46,7 +46,7 @@ $(function(){
 						console.log(data);
 						loading.hide();
 						if(data.code==200){
-							window.location.href = 'index.html';
+							window.location.href = 'movieTop.html';
 						}else{
 							mui.alert(data.msg,'提示','确定',null,'div');
 						}

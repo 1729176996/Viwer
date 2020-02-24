@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="referrer" content="no-referrer" />
+	<title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+	<link href="css/weui.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="css/common.css"/>
+	<script src="js/mui.min.js"></script>
+	<script src="js/jquery-1.8.2.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/fastclick.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/weui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/movieTop.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css">
+		.hang{
+			width: 100%;
+			height: auto;
+			display: flex;
+		}
+	</style>
+</head>
+<body>
+	<div class="mui-content" id="main">
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">电影Top</h1>
+			<a class="mui-icon mui-icon-arrowthinup mui-pull-right" @tap="toTop"></a>
+		</header>
+		<div class="mui-content mui-scroll-wrapper flex" style="position: relative;" id="scrollWrapper">
+			<div class="mui-scroll">
+				<!--这里放置真实显示的DOM内容-->
+				
+				<ul class="mui-table-view">
+					<li v-for="item in list" class="mui-table-view-cell">
+						<div class="hang">
+							<div class="flex">{{item.title}}</div>
+							<div>{{item.year}}</div>
+						</div>
+					</li>
+				</ul>
+				
+			</div>
+		</div>
+		<nav class="mui-bar mui-bar-tab" style="position: relative;">
+			<a class="mui-tab-item mui-active" @click="toMovieTop">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">电影Top</span>
+			</a>
+			<a class="mui-tab-item" @click="toComingSoon">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">即将上映</span>
+			</a>
+		</nav>
+	</div>
+</body>
+</html>
