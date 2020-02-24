@@ -53,7 +53,7 @@ $(function(){
 					apikey:apikey
 				};
 				$.ajax({
-					url:'https://api.douban.com/v2/movie/top250',
+					url:'https://api.douban.com/v2/movie/coming_soon',
 					type:'GET',
 					data:sendObj,
 					dataType:'json',
