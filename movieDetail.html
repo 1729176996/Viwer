@@ -28,6 +28,12 @@
 		.mt1{
 			margin-top: 0.5em;
 		}
+		.hang{
+			width: 100%;
+			height: 40px;
+			display: flex;
+			line-height: 40px;
+		}
 	</style>
 </head>
 <body>
@@ -59,7 +65,13 @@
 				<div class="mt1">上映日期: <span v-for="pubdate,index in detailObj.pubdates"><a v-if="index!=0"> / </a>{{pubdate}}</span></div>
 				<div class="mt1">片长: <span v-for="duration,index in detailObj.durations"><a v-if="index!=0"> / </a>{{duration}}</span></div>
 				<div class="mt1">又名: <span v-for="ak,index in detailObj.aka"><a v-if="index!=0"> / </a>{{ak}}</span></div>
-				
+				<div class="mt1 mui-input-group">
+					<div class="hang mui-input-row">在哪儿看这部电影:</div>
+					<div class="hang mui-input-row" v-for="video in detailObj.videos">
+						<div class="flex" style="padding-left: 1em;"><a :href="video.sample_link" target="view_window">{{video.source.name}}</a></div>
+						<div>{{video.need_pay?'VIP免费观看':'免费观看'}}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
