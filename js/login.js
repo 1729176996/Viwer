@@ -35,6 +35,7 @@ $(function(){
 					username:username,
 					password:password
 				};
+				window.localStorage.removeItem('userObj');
 				loading = weui.loading("加载中");
 				$.ajax({
 					url:url+'/login',
@@ -46,6 +47,7 @@ $(function(){
 						console.log(data);
 						loading.hide();
 						if(data.code==200){
+							window.localStorage.setItem('userObj',JSON.stringify(data.data[0]));
 							window.location.href = 'movieTop.html';
 						}else{
 							mui.alert(data.msg,'提示','确定',null,'div');

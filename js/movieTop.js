@@ -101,13 +101,17 @@ $(function(){
 				mui('#scrollWrapper').pullRefresh().scrollTo(0,0,100);
 			},
 			toMovieTop:function(item){
-				window.location.href = 'index.html';
+				window.location.href = 'movieTop.html';
 			},
 			toComingSoon:function(item){
 				window.location.href = 'comingSoon.html';
 			},
+			toCollectMovie:function(){
+				window.location.href = 'collectMovie.html';
+			},
 			detail:function(item){
 				window.localStorage.setItem('movie_id',item.id);
+				window.localStorage.setItem('movieObj',JSON.stringify(item));
 				window.location.href = 'movieDetail.html';
 			}
 	    }

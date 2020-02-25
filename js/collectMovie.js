@@ -41,19 +41,21 @@ $(function(){
 			},
 			getList:function(refreshType){
 				var _this = this;
-				if(refreshType=='下拉'){
-					start = 0;
-					_this.list = [];
-				}else{
-					start += count;
+				
+				var userObj = window.localStorage.getItem('userObj')?JSON.parse(window.localStorage.getItem('userObj')):null;
+				if(!userObj){
+					mui.alert('用户消息失效，请重新登录','提示','确定',function(){
+						window.localStorage.removeItem('userObj');
+						window.location.href = 'login.html';
+					},'div');
+					return;
 				}
+				
 				var sendObj = {
-					start:start,
-					count:count,
-					apikey:apikey
+					user_id:userObj.id
 				};
 				$.ajax({
-					url:'https://api.douban.com/v2/movie/coming_soon',
+					url:url+'/getUserCollect',
 					type:'GET',
 					data:sendObj,
 					dataType:'json',
@@ -61,20 +63,15 @@ $(function(){
 					success:function(data){
 						console.log(data);
 						
-						if(data&&data.subjects&&data.subjects.length>0){
-							if(refreshType=='下拉'){
-								_this.list = data.subjects;
-							}else{
-								_this.list = _this.list.concat(data.subjects);
+						if(data.code==200){
+							var _list = [];
+							for(var n=0;n<data.data.length;n++){
+								var obj = data.data[n].movieObj?JSON.parse(data.data[n].movieObj):null;
+								if(obj){
+									_list.push(obj);
+								}
 							}
-						}else{
-							if(refreshType=='下拉'){
-								_this.list = [];
-								start = 0;
-							}else{
-								_this.list = _this.list.concat(data.subjects);
-								start -= count;
-							}
+							_this.list = _list;
 						}
 						
 						_this.$nextTick(function(){

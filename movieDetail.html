@@ -41,7 +41,8 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">电影详情</h1>
-			<a class="mui-icon mui-icon-arrowthinup mui-pull-right" @tap="toTop"></a>
+			<a class="mui-icon  mui-pull-right" v-if="collect_flag" @tap="uncollect">取消收藏</a>
+			<a class="mui-icon  mui-pull-right" v-if="!collect_flag" @tap="collect">收藏</a>
 		</header>
 		<div class="mui-content mui-scroll-wrapper flex" style="position: relative;" id="scrollWrapper">
 			<div class="mui-scroll">
@@ -65,7 +66,7 @@
 				<div class="mt1">上映日期: <span v-for="pubdate,index in detailObj.pubdates"><a v-if="index!=0"> / </a>{{pubdate}}</span></div>
 				<div class="mt1">片长: <span v-for="duration,index in detailObj.durations"><a v-if="index!=0"> / </a>{{duration}}</span></div>
 				<div class="mt1">又名: <span v-for="ak,index in detailObj.aka"><a v-if="index!=0"> / </a>{{ak}}</span></div>
-				<div class="mt1 mui-input-group">
+				<div class="mt1 mui-input-group" v-if="detailObj.videos&&detailObj.videos.length>0">
 					<div class="hang mui-input-row">在哪儿看这部电影:</div>
 					<div class="hang mui-input-row" v-for="video in detailObj.videos">
 						<div class="flex" style="padding-left: 1em;"><a @click="view(video.sample_link)">{{video.source.name}}</a></div>

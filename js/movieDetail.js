@@ -4,10 +4,12 @@ $(function(){
 	vm = new Vue({
 	    el: "#main",
 	    data:{
-			detailObj:[]
+			detailObj:[],
+			collect_flag:false
 	    },
 	    mounted:function(){
 			this.init();
+			this.isCollect();
 	    },
 	    methods:{
 			init:function(){
@@ -74,8 +76,148 @@ $(function(){
 					}
 				})
 			},
-			toTop:function(){
-				mui('#scrollWrapper').pullRefresh().scrollTo(0,0,100);
+			isCollect:function(){
+				var _this = this;
+				
+				var userObj = window.localStorage.getItem('userObj')?JSON.parse(window.localStorage.getItem('userObj')):null;
+				if(!userObj){
+					mui.alert('用户消息失效，请重新登录','提示','确定',function(){
+						window.localStorage.removeItem('userObj');
+						window.location.href = 'login.html';
+					},'div');
+					return;
+				}
+				
+				var movie_id = window.localStorage.getItem('movie_id');
+				if(!movie_id){
+					mui.alert('电影id为空，返回上一页','提示','确定',function(){
+						window.localStorage.removeItem('movie_id');
+						window.history.back(-1);
+					},'div');
+					return;
+				}
+				
+				var sendObj = {
+					user_id:userObj.id,
+					movie_id:movie_id
+				};
+				loading = weui.loading("加载中");
+				$.ajax({
+					url:url+'/isCollect',
+					type:'GET',
+					data:sendObj,
+					dataType:'json',
+					timeout:8000,
+					success:function(data){
+						console.log(data);
+						loading.hide();
+						if(data.code==200){
+							_this.collect_flag = data.data;
+						}else{
+							mui.alert(data.msg,'提示','确定',null,'div');
+						}
+					},
+					error:function(xhr, errorType, error,msg){
+						loading.hide();
+						mui.alert(errMsg,'提示','确定',null,'div');
+					}
+				})
+			},
+			collect:function(){
+				var _this = this;
+				
+				var userObj = window.localStorage.getItem('userObj')?JSON.parse(window.localStorage.getItem('userObj')):null;
+				if(!userObj){
+					mui.alert('用户消息失效，请重新登录','提示','确定',function(){
+						window.localStorage.removeItem('userObj');
+						window.location.href = 'login.html';
+					},'div');
+					return;
+				}
+				
+				var movie_id = window.localStorage.getItem('movie_id');
+				var movieObj = window.localStorage.getItem('movieObj');
+				if(!(movie_id&&movieObj)){
+					mui.alert('电影id为空，返回上一页','提示','确定',function(){
+						window.localStorage.removeItem('movie_id');
+						window.history.back(-1);
+					},'div');
+					return;
+				}
+				
+				var sendObj = {
+					user_id:userObj.id,
+					movie_id:movie_id,
+					movieObj:movieObj
+				};
+				loading = weui.loading("加载中");
+				$.ajax({
+					url:url+'/collect',
+					type:'GET',
+					data:sendObj,
+					dataType:'json',
+					timeout:8000,
+					success:function(data){
+						console.log(data);
+						loading.hide();
+						if(data.code==200){
+							_this.collect_flag = true;
+						}else{
+							mui.alert(data.msg,'提示','确定',null,'div');
+						}
+					},
+					error:function(xhr, errorType, error,msg){
+						loading.hide();
+						mui.alert(errMsg,'提示','确定',null,'div');
+					}
+				})
+			},
+			uncollect:function(){
+				var _this = this;
+				
+				var userObj = window.localStorage.getItem('userObj')?JSON.parse(window.localStorage.getItem('userObj')):null;
+				if(!userObj){
+					mui.alert('用户消息失效，请重新登录','提示','确定',function(){
+						window.localStorage.removeItem('userObj');
+						window.location.href = 'login.html';
+					},'div');
+					return;
+				}
+				
+				var movie_id = window.localStorage.getItem('movie_id');
+				if(!movie_id){
+					mui.alert('电影id为空，返回上一页','提示','确定',function(){
+						window.localStorage.removeItem('movie_id');
+						window.history.back(-1);
+					},'div');
+					return;
+				}
+				
+				var sendObj = {
+					user_id:userObj.id,
+					movie_id:movie_id
+				};
+				loading = weui.loading("加载中");
+				$.ajax({
+					url:url+'/uncollect',
+					type:'GET',
+					data:sendObj,
+					dataType:'json',
+					timeout:8000,
+					success:function(data){
+						console.log(data);
+						loading.hide();
+						if(data.code==200){
+							_this.collect_flag = false;
+						}else{
+							mui.alert(data.msg,'提示','确定',null,'div');
+						}
+					},
+					error:function(xhr, errorType, error,msg){
+						loading.hide();
+						mui.alert(errMsg,'提示','确定',null,'div');
+					}
+				})
 			},
 			view:function(href){
 				if(plus){

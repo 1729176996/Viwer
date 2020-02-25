@@ -40,7 +40,7 @@
 				<ul class="mui-table-view">
 					<li v-for="item in list" class="mui-table-view-cell">
 						<div class="hang">
-							<div class="cover"><img :src="item.images.small" /></div>
+							<div class="cover" v-if="item&&item.images&&item.images.small"><img :src="item.images.small" /></div>
 							<div class="flex">
 								<a @click="detail(item)">{{item.title}}<span v-if="item.title!=item.original_title"> / {{item.original_title}}</span></a>
 								<div>导演:<span v-for="director in item.directors"> {{director.name}}</span></div>
@@ -61,6 +61,10 @@
 			<a class="mui-tab-item mui-active" @click="toComingSoon">
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">即将上映</span>
+			</a>
+			<a class="mui-tab-item" @click="toCollectMovie">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">收藏</span>
 			</a>
 		</nav>
 	</div>
